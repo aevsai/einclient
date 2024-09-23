@@ -1,0 +1,13 @@
+[Unit]
+Description=Ein is an AI assistant run on a Raspberry Pi
+
+[Service]
+User=root
+WorkingDirectory=/home/pi/code
+ExecStart=/home/pi/code/ein-go-client
+# optional items below
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

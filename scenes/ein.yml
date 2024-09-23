@@ -1,0 +1,34 @@
+version: 1
+frame:
+  width: 400
+  height: 400
+objects:
+  # Left eye
+  - name: leftPupil
+    type: circle
+    params:
+      radius: 10
+      color: white
+      position:
+        x: 120
+        y: 160
+  - name: leftEyelid
+    type: line
+
+  - name: leftEyebrow
+
+  # Right eye
+  - name: rightPupil
+    type: circle
+    params:
+      radius: 10
+      color: white
+      position:
+        x: 280
+        y: 160
+  - name: rightEyelid
+  - name: rightEyebrow
+
+  - name: nose
+  - name: mustache
+  - name: mouth

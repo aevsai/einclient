@@ -1,0 +1,12 @@
+version: 1
+frame:
+  width: 400
+  height: 400
+objects:
+  - name: Circle
+    type: circle
+    properties:
+      x: 0
+      y: 0
+      radius: 100
+      color: white
