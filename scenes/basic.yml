@@ -3,10 +3,66 @@ frame:
   width: 400
   height: 400
 objects:
-  - name: Circle
+  - name: CatBody
     type: circle
     properties:
-      x: 0
-      y: 0
+      x: 200
+      y: 300
       radius: 100
-      color: white
+      color: gray
+  - name: CatHead
+    type: circle
+    properties:
+      x: 200
+      y: 150
+      radius: 50
+      color: gray
+  - name: LeftEar
+    type: polygon
+    properties:
+      n: 3
+      x: 180
+      y: 100
+      r: 40
+      rotation: 0
+      color: gray
+  - name: RightEar
+    type: polygon
+    properties:
+      n: 3
+      x: 220
+      y: 100
+      r: 40
+      rotation: 0
+      color: gray
+  - name: LeftEye
+    type: circle
+    properties:
+      x: 180
+      y: 130
+      radius: 10
+      color: black
+  - name: RightEye
+    type: circle
+    properties:
+      x: 220
+      y: 130
+      radius: 10
+      color: black
+  - name: Nose
+    type: polygon
+    properties:
+      n: 3
+      x: 200
+      y: 150
+      r: 10
+      rotation: 180
+      color: pink
+  - name: Mouth
+    type: line
+    properties:
+      x1: 200
+      y1: 160
+      x2: 200
+      y2: 180
+      color: black

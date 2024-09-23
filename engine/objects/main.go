@@ -6,46 +6,69 @@ type Renderable interface {
 	Render(ctx *gg.Context)
 }
 
+type BaseObject struct {
+	X     float64
+	Y     float64
+	Color string
+}
+
 type Circle struct {
-	X      float64
-	Y      float64
+	BaseObject
 	Radius float64
 }
 
 func (c Circle) Render(ctx *gg.Context) {
+	ctx.SetHexColor(c.Color)
 	ctx.DrawCircle(c.X, c.Y, c.Radius)
+	ctx.Fill()
 }
 
 type Rectangle struct {
-	X      float64
-	Y      float64
+	BaseObject
 	Width  float64
 	Height float64
 }
 
 func (r Rectangle) Render(ctx *gg.Context) {
+	ctx.SetHexColor(r.Color)
 	ctx.DrawRectangle(r.X, r.Y, r.Width, r.Height)
+	ctx.Fill()
 }
 
 type Line struct {
-	X1 float64
-	Y1 float64
+	BaseObject
 	X2 float64
 	Y2 float64
 }
 
 func (l Line) Render(ctx *gg.Context) {
-	ctx.DrawLine(l.X1, l.Y1, l.X2, l.Y2)
+	ctx.SetHexColor(l.Color)
+	ctx.DrawLine(l.X, l.Y, l.X2, l.Y2)
+	ctx.Stroke()
 }
 
 type Arc struct {
-	X      float64
-	Y      float64
+	BaseObject
 	Radius float64
 	Start  float64
 	End    float64
 }
 
 func (a Arc) Render(ctx *gg.Context) {
+	ctx.SetHexColor(a.Color)
 	ctx.DrawArc(a.X, a.Y, a.Radius, a.Start, a.End)
+	ctx.Fill()
+}
+
+type Polygon struct {
+	BaseObject
+	N        int
+	R        float64
+	Rotation float64
+}
+
+func (p Polygon) Render(ctx *gg.Context) {
+	ctx.SetHexColor(p.Color)
+	ctx.DrawRegularPolygon(p.N, p.X, p.Y, p.R, p.Rotation)
+	ctx.Fill()
 }

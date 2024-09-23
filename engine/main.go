@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/fogleman/gg"
-
 	"gopkg.in/yaml.v2"
 )
 
@@ -16,6 +15,7 @@ const (
 	ObjectTypeRectangle = "rectangle"
 	ObjectTypeArc       = "arc"
 	ObjectTypeLine      = "line"
+	ObjectTypePolygon   = "polygon"
 )
 
 type Scene struct {
@@ -36,6 +36,14 @@ type ObjectWrapper struct {
 	Object     objects.Renderable
 }
 
+func unmarshalObject(data []byte, target *objects.Renderable, obj objects.Renderable) error {
+	if err := json.Unmarshal(data, obj); err != nil {
+		return err
+	}
+	*target = obj
+	return nil
+}
+
 func LoadScene(filePath string) (*Scene, error) {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
@@ -48,42 +56,36 @@ func LoadScene(filePath string) (*Scene, error) {
 		return nil, err
 	}
 
-	for _, wrapper := range scene.Objects {
+	typeConstructorMap := map[string]func() objects.Renderable{
+		ObjectTypeCircle:    func() objects.Renderable { return new(objects.Circle) },
+		ObjectTypeRectangle: func() objects.Renderable { return new(objects.Rectangle) },
+		ObjectTypeArc:       func() objects.Renderable { return new(objects.Arc) },
+		ObjectTypeLine:      func() objects.Renderable { return new(objects.Line) },
+		ObjectTypePolygon:   func() objects.Renderable { return new(objects.Polygon) },
+	}
+
+	for i := 0; i < len(scene.Objects); i++ {
+		wrapper := &scene.Objects[i]
 		data, err := json.Marshal(wrapper.Properties)
 		if err != nil {
 			return nil, err
 		}
-		switch wrapper.Type {
-		case ObjectTypeCircle:
-			var object objects.Circle
-			if err := json.Unmarshal(data, &object); err != nil {
-				return nil, err
-			}
-		case ObjectTypeRectangle:
-			var object objects.Rectangle
-			if err := json.Unmarshal(data, &object); err != nil {
-				return nil, err
-			}
-		case ObjectTypeArc:
-			var object objects.Arc
-			if err := json.Unmarshal(data, &object); err != nil {
-				return nil, err
-			}
-		case ObjectTypeLine:
-			var object objects.Line
-			if err := json.Unmarshal(data, &object); err != nil {
-				return nil, err
-			}
-		default:
+
+		constructor, ok := typeConstructorMap[wrapper.Type]
+		if !ok {
 			return nil, fmt.Errorf("unknown object type: %s", wrapper.Type)
 		}
 
+		if err := unmarshalObject(data, &wrapper.Object, constructor()); err != nil {
+			return nil, err
+		}
 	}
 	return &scene, nil
 }
 
 func (s *Scene) Render(ctx *gg.Context) error {
 	for _, wrapper := range s.Objects {
+		fmt.Printf("Rendering %v\n", wrapper.Object)
 		wrapper.Object.Render(ctx)
 	}
 	return nil
