@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -12,6 +13,10 @@ import (
 	"github.com/getsentry/sentry-go"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
+)
+
+var (
+	scenePath = flag.String("scene", "./scenes/ein.yml", "path to the scene file")
 )
 
 func LogErrorAndCapture(logger zerolog.Logger, err error, msg string) {
@@ -52,12 +57,16 @@ func main() {
 	LogMessageAndCapture(logger, zerolog.InfoLevel, "Hello, World!")
 
 	// Call a function that might produce an error and capture it with Sentry
-	scenePath := "./scenes/basic.yml"
-	s, err := engine.LoadScene(scenePath)
+	ch := make(chan *engine.Scene, 1)
+	err = engine.LoadScene(*scenePath, ch)
 	if err != nil {
 		LogErrorAndCapture(logger, err, "An error occurred")
 	}
-	l, err := loop.NewLoop(s)
+	l, err := loop.NewLoop(ch)
+	fmt.Printf("loop: %v\n", l)
+	if err != nil {
+		LogErrorAndCapture(logger, err, "An error occurred")
+	}
 	err = l.Start()
 	if err != nil {
 		LogErrorAndCapture(logger, err, "An error occurred")

@@ -3,32 +3,76 @@ frame:
   width: 400
   height: 400
 objects:
-  # Left eye
   - name: leftPupil
     type: circle
-    params:
+    properties:
       radius: 10
-      color: white
-      position:
-        x: 120
-        y: 160
-  - name: leftEyelid
-    type: line
-
-  - name: leftEyebrow
-
-  # Right eye
+      color: "#ffffff"
+      x: 120
+      y: 160
   - name: rightPupil
     type: circle
-    params:
+    properties:
+      color: "#ffffff"
       radius: 10
-      color: white
-      position:
-        x: 280
-        y: 160
-  - name: rightEyelid
-  - name: rightEyebrow
-
+      x: 280
+      y: 160
   - name: nose
+    type: arc
+    properties:
+      color: "#ffffff"
+      radius: 10
+      start: 1.57
+      end: -1.05
+      x: 200
+      y: 200
   - name: mustache
+    type: polygon
+    properties:
+      color: "#ffffff"
+      points:
+        - x: 120
+          y: 260
+        - x: 280
+          y: 260
+        - x: 300
+          y: 300
+        - x: 100
+          y: 300
   - name: mouth
+    type: line
+    properties:
+      color: "#ffffff"
+      start:
+        x: 150
+        y: 320
+      end:
+        x: 250
+        y: 320
+  - name: leftEyeBrow
+    type: rectangle
+    properties:
+      color: "#ffffff"
+      x: 80
+      y: 100
+      height: 15
+      width: 80
+  - name: rightEyeBrow
+    type: rectangle
+    properties:
+      color: "#ffffff"
+      x: 240
+      y: 100
+      height: 15
+      width: 80
+  animations:
+    - name: blink
+      duration: 0.5
+      repeat: true
+      keyframes:
+        - properties:
+            opacity: 1
+          time: 0
+        - properties:
+            opacity: 0
+          time: 0.5
