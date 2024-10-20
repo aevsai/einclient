@@ -255,7 +255,7 @@ func LoadScene(filePath string, reloadChan chan *Scene) error {
 			watcher, err := os.Stat(filePath)
 			if err != nil {
 				fmt.Println("Error watching file:", err)
-				return
+				continue
 			}
 
 			if watcher.ModTime() != modTime {
