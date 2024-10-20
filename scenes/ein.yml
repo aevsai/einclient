@@ -55,13 +55,13 @@ objects:
       color: "accentColor"
       points:
         - x: (frameWidth-mustacheWidthTop)/2
-          y: frameHeight/2+mustacheOffset
+          y: frameHeight/2+mustacheOffsetY
         - x: (frameWidth+mustacheWidthTop)/2
-          y: frameHeight/2+mustacheOffset
+          y: frameHeight/2+mustacheOffsetY
         - x: (frameWidth+mustacheWidthBottom)/2
-          y: frameHeight/2+mustacheOffset-mustacheHeight
+          y: frameHeight/2+mustacheOffsetY+mustacheHeight
         - x: (frameWidth-mustacheWidthBottom)/2
-          y: frameHeight/2+mustacheOffset-mustacheHeight
+          y: frameHeight/2+mustacheOffsetY+mustacheHeight
   - name: mouth
     type: line
     properties:

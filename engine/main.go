@@ -83,6 +83,7 @@ func (scene *Scene) ComputeAnimations() error {
 			animation.PlayedAt = t
 		}
 		idx, kf := animation.getKeyframe(t)
+		fmt.Printf("Animation %s, idx %d, keyframe %v\n", animation.Name, idx, kf)
 		if kf == nil {
 			continue
 		}
@@ -138,10 +139,12 @@ func (wrapper *ObjectWrapper) Render(ctx *gg.Context, env map[string]interface{}
 			return new(objects.SimplePolygon)
 		},
 	}
-
+	fmt.Printf("====================================================\n")
 	fmt.Printf("Env %v\n", env)
-
-	data, err := json.Marshal(wrapper.Properties)
+	fmt.Printf("Properties %v\n", wrapper.Properties)
+	computedProperties, err := Process(wrapper.Properties, env)
+	fmt.Printf("Computed properties %v\n", computedProperties)
+	data, err := json.Marshal(computedProperties)
 	if err != nil {
 		return err
 	}
@@ -154,6 +157,7 @@ func (wrapper *ObjectWrapper) Render(ctx *gg.Context, env map[string]interface{}
 	if err := unmarshalObject(data, &wrapper.Object, constructor()); err != nil {
 		return err
 	}
+	fmt.Printf("Rendering object %s: %v\n", wrapper.Name, wrapper.Object)
 	wrapper.Object.Render(ctx)
 	return nil
 }
@@ -183,12 +187,14 @@ func Process(obj map[string]interface{}, env map[string]interface{}) (map[string
 	var err error
 	var res interface{}
 	for key, value := range obj {
+		fmt.Printf("Processing key %s, value %v\n", key, value)
 		switch key {
 		case "points":
 			var output []interface{}
 			for _, item := range value.([]interface{}) {
 				pItem, err := Process(item.(map[string]interface{}), env)
 				if err != nil {
+					fmt.Printf("Error processing points %v\n", item)
 					return nil, err
 				}
 				output = append(output, pItem)
@@ -204,6 +210,7 @@ func Process(obj map[string]interface{}, env map[string]interface{}) (map[string
 		default:
 			res, err = EvaluateExpression(value.(string), env)
 			if err != nil {
+				fmt.Printf("Error processing expression %v\n", err.Error())
 				return nil, err
 			}
 			break
