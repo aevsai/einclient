@@ -2,77 +2,123 @@ version: 1
 frame:
   width: 400
   height: 400
+env:
+  pupilSize: 10
+  eyesOffsetX: 10
+  eyesOffsetY: -40
+  frameWidth: 400
+  frameHeight: 400
+  accentColor: "#ffffff"
+  backgroundColor: "#000000"
+  mustacheWidthTop: 160
+  mustacheWidthBottom: 200
+  mustacheHeight: 40
+  mustacheOffsetY: 60
+  mouthWidth: 40
+  mouthOffsetX: 0
+  mouthOffsetY: 120
+  eyebrowOffsetX: 0
+  eyebrowOffsetY: 100
+  eyebrowWidth: 80
+  eyebrowHeight: 15
+  eyelidWidth: 80
+  eyelidHeight: 80
+  leftEyelidHeight: 0
+  rightEyelidHeight: 0
 objects:
   - name: leftPupil
     type: circle
     properties:
-      radius: 10
-      color: "#ffffff"
-      x: 120
-      y: 160
+      radius: pupilSize
+      color: accentColor
+      x: frameWidth/2-eyesOffsetX
+      y: frameHeight/2-eyesOffsetY
   - name: rightPupil
     type: circle
     properties:
-      color: "#ffffff"
-      radius: 10
-      x: 280
-      y: 160
+      color: accentColor
+      radius: pupilSize
+      x: frameWidth/2+eyesOffsetX
+      y: frameHeight/2-eyesOffsetY
   - name: nose
     type: arc
     properties:
-      color: "#ffffff"
-      radius: 10
-      start: 1.57
-      end: -1.05
-      x: 200
-      y: 200
+      color: accentColor
+      radius: "10"
+      startAngle: "1.57"
+      endAngle: "-1.05"
+      x: frameWidth
+      y: frameHeight
   - name: mustache
     type: polygon
     properties:
-      color: "#ffffff"
+      color: "accentColor"
       points:
-        - x: 120
-          y: 260
-        - x: 280
-          y: 260
-        - x: 300
-          y: 300
-        - x: 100
-          y: 300
+        - x: (frameWidth-mustacheWidthTop)/2
+          y: frameHeight/2+mustacheOffset
+        - x: (frameWidth+mustacheWidthTop)/2
+          y: frameHeight/2+mustacheOffset
+        - x: (frameWidth+mustacheWidthBottom)/2
+          y: frameHeight/2+mustacheOffset-mustacheHeight
+        - x: (frameWidth-mustacheWidthBottom)/2
+          y: frameHeight/2+mustacheOffset-mustacheHeight
   - name: mouth
     type: line
     properties:
-      color: "#ffffff"
-      start:
-        x: 150
-        y: 320
-      end:
-        x: 250
-        y: 320
+      color: "accentColor"
+      startPoint:
+        x: (frameWidth-mouthWidth)/2+mouthOffsetX
+        y: frameHeight/2+mouthOffsetY
+      endPoint:
+        x: (frameWidth+mouthWidth)/2+mouthOffsetX
+        y: frameHeight/2+mouthOffsetY
   - name: leftEyeBrow
     type: rectangle
     properties:
-      color: "#ffffff"
-      x: 80
-      y: 100
-      height: 15
-      width: 80
+      color: "accentColor"
+      x: frameWidth/2-eyebrowWidth-eyebrowOffsetX
+      y: frameHeight/2-eyebrowOffsetY
+      height: eyebrowHeight
+      width: eyebrowWidth
   - name: rightEyeBrow
     type: rectangle
     properties:
-      color: "#ffffff"
-      x: 240
-      y: 100
-      height: 15
-      width: 80
-  animations:
-    - name: blink
-      duration: 0.5
-      repeat: true
-      keyframes:
-        - properties:
-            opacity: 1
-          time: 0
-        - properties:
-            opacity: 0
-          time: 0.5
+      color: "accentColor"
+      x: frameWidth/2+eyebrowOffsetX
+      y: frameHeight/2-eyebrowOffsetY
+      height: eyebrowHeight
+      width: eyebrowWidth
+  - name: leftEyelid
+    type: rectangle
+    properties:
+      color: "accentColor"
+      x: "110"
+      y: "100"
+      height: "leftEyelidHeight"
+      width: "15"
+  - name: rightEyelid
+    type: rectangle
+    properties:
+      color: "accentColor"
+      x: "140"
+      y: "100"
+      height: "rightEyelidHeight"
+      width: "15"
+animations:
+  - name: blink
+    duration: "0.2"
+    repeat: "true"
+    delay: "random(0, 5)"
+    keyframes:
+      - properties:
+          leftEyelidHeight: 0
+          rightEyelidHeight: 0
+        time: 0
+      - properties:
+          leftEyelidHeight: 40
+          rightEyelidHeight: 40
+        time: 0.1
+      - properties:
+          leftEyelidHeight: 0
+          rightEyelidHeight: 0
+        time: 0.2

@@ -36,27 +36,27 @@ func (r Rectangle) Render(ctx *gg.Context) {
 }
 
 type Line struct {
-	Start gg.Point
-	End   gg.Point
-	Color string
+	StartPoint gg.Point
+	EndPoint   gg.Point
+	Color      string
 }
 
 func (l Line) Render(ctx *gg.Context) {
 	ctx.SetHexColor(l.Color)
-	ctx.DrawLine(l.Start.X, l.Start.Y, l.End.X, l.End.Y)
+	ctx.DrawLine(l.StartPoint.X, l.StartPoint.Y, l.EndPoint.X, l.EndPoint.Y)
 	ctx.Stroke()
 }
 
 type Arc struct {
 	BaseObject
-	Radius float64
-	Start  float64
-	End    float64
+	Radius     float64
+	StartAngle float64
+	EndAngle   float64
 }
 
 func (a Arc) Render(ctx *gg.Context) {
 	ctx.SetHexColor(a.Color)
-	ctx.DrawArc(a.X, a.Y, a.Radius, a.Start, a.End)
+	ctx.DrawArc(a.X, a.Y, a.Radius, a.StartAngle, a.EndAngle)
 	ctx.Stroke()
 }
 
