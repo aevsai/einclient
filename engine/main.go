@@ -186,6 +186,7 @@ func EvaluateExpression(expression string, variables map[string]interface{}) (in
 func Process(obj map[string]interface{}, env map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	var res interface{}
+	var computed map[string]interface{}
 	for key, value := range obj {
 		fmt.Printf("Processing key %s, value %v\n", key, value)
 		switch key {
@@ -215,10 +216,10 @@ func Process(obj map[string]interface{}, env map[string]interface{}) (map[string
 			}
 			break
 		}
-		obj[key] = res
+		computed[key] = res
 	}
 	// fmt.Printf("Processed object %v\n", obj)
-	return obj, nil
+	return computed, nil
 }
 
 func LoadScene(filePath string, reloadChan chan *Scene) error {
