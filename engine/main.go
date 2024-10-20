@@ -83,7 +83,6 @@ func (scene *Scene) ComputeAnimations() error {
 			animation.PlayedAt = t
 		}
 		idx, kf := animation.getKeyframe(t)
-		fmt.Printf("Animation %s, idx %d, keyframe %v\n", animation.Name, idx, kf)
 		if kf == nil {
 			continue
 		}
@@ -139,11 +138,7 @@ func (wrapper *ObjectWrapper) Render(ctx *gg.Context, env map[string]interface{}
 			return new(objects.SimplePolygon)
 		},
 	}
-	fmt.Printf("====================================================\n")
-	fmt.Printf("Env %v\n", env)
-	fmt.Printf("Properties %v\n", wrapper.Properties)
 	computedProperties, err := Process(wrapper.Properties, env)
-	fmt.Printf("Computed properties %v\n", computedProperties)
 	data, err := json.Marshal(computedProperties)
 	if err != nil {
 		return err
@@ -157,7 +152,6 @@ func (wrapper *ObjectWrapper) Render(ctx *gg.Context, env map[string]interface{}
 	if err := unmarshalObject(data, &wrapper.Object, constructor()); err != nil {
 		return err
 	}
-	fmt.Printf("Rendering object %s: %v\n", wrapper.Name, wrapper.Object)
 	wrapper.Object.Render(ctx)
 	return nil
 }
@@ -188,7 +182,6 @@ func Process(obj map[string]interface{}, env map[string]interface{}) (map[string
 	var res interface{}
 	computed := make(map[string]interface{})
 	for key, value := range obj {
-		fmt.Printf("Processing key %s, value %v\n", key, value)
 		switch key {
 		case "points":
 			var output []interface{}

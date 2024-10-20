@@ -5,7 +5,7 @@ frame:
 env:
   pupilSize: 10
   eyesOffsetX: 10
-  eyesOffsetY: -40
+  eyesOffsetY: -10
   frameWidth: 400
   frameHeight: 400
   accentColor: "#ffffff"
@@ -17,12 +17,12 @@ env:
   mouthWidth: 40
   mouthOffsetX: 0
   mouthOffsetY: 120
-  eyebrowOffsetX: 0
+  eyebrowOffsetX: 40
   eyebrowOffsetY: 100
   eyebrowWidth: 80
   eyebrowHeight: 15
   eyelidWidth: 80
-  eyelidHeight: 80
+  eyelidHeight: 0
   leftEyelidHeight: 0
   rightEyelidHeight: 0
 objects:
@@ -32,14 +32,14 @@ objects:
       radius: pupilSize
       color: accentColor
       x: frameWidth/2-eyesOffsetX
-      y: frameHeight/2-eyesOffsetY
+      y: frameHeight/2+eyesOffsetY
   - name: rightPupil
     type: circle
     properties:
       color: accentColor
       radius: pupilSize
       x: frameWidth/2+eyesOffsetX
-      y: frameHeight/2-eyesOffsetY
+      y: frameHeight/2+eyesOffsetY
   - name: nose
     type: arc
     properties:
@@ -115,7 +115,7 @@ animations:
           rightEyelidHeight: 0
         time: 0
       - properties:
-          leftEyelidHeight: 40
+          leftEyelidHeight: 0
           rightEyelidHeight: 40
         time: 0.1
       - properties:
