@@ -4,8 +4,8 @@ frame:
   height: 400
 env:
   pupilSize: 10
-  eyesOffsetX: 10
-  eyesOffsetY: -10
+  eyesOffsetX: 80
+  eyesOffsetY: -40
   frameWidth: 400
   frameHeight: 400
   accentColor: "#ffffff"
@@ -23,8 +23,8 @@ env:
   eyebrowHeight: 15
   eyelidWidth: 80
   eyelidHeight: 0
-  leftEyelidHeight: 0
-  rightEyelidHeight: 0
+  leftEyelidHeight: 15
+  rightEyelidHeight: 15
 objects:
   - name: leftPupil
     type: circle
@@ -47,8 +47,8 @@ objects:
       radius: "10"
       startAngle: "1.57"
       endAngle: "-1.05"
-      x: frameWidth
-      y: frameHeight
+      x: frameWidth/2
+      y: frameHeight/2
   - name: mustache
     type: polygon
     properties:
@@ -95,7 +95,7 @@ objects:
       x: "110"
       y: "100"
       height: "leftEyelidHeight"
-      width: "15"
+      width: "100"
   - name: rightEyelid
     type: rectangle
     properties:
@@ -103,7 +103,7 @@ objects:
       x: "140"
       y: "100"
       height: "rightEyelidHeight"
-      width: "15"
+      width: "100"
 animations:
   - name: blink
     duration: "0.2"
@@ -115,8 +115,8 @@ animations:
           rightEyelidHeight: 0
         time: 0
       - properties:
-          leftEyelidHeight: 0
-          rightEyelidHeight: 40
+          leftEyelidHeight: 100
+          rightEyelidHeight: 100
         time: 0.1
       - properties:
           leftEyelidHeight: 0
